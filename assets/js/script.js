@@ -16,12 +16,12 @@
   // !I need an event listener on start button -- listening for clicks
   // !When you click the start button, the landing page disappears and the first question & answers appears AND the timer appears and starts counting down
 // !Need a timer that counts down
-// I need a set of questions -- array of objects
+// !I need a set of questions -- array of objects
   // ? What do the questions need to include?
-  // Question text -- string
-  // Set of answers -- array of strings
-  // Some way to check whether the answer is correct -- give the string OR the index of the correct answer
-    // ! Some way to track whether the answer the user selected is the correct answer -- does NOT need to be with the other question info
+  // !Question text -- string
+  // !Set of answers -- array of strings
+  // !Some way to check whether the answer is correct -- give the string OR the index of the correct answer
+    //  Some way to track whether the answer the user selected is the correct answer -- does NOT need to be with the other question info
 // Need a way to display the question text, answers, and the answers need to be clickable
 // When you click an answer
   // Compares the answer you chose to the correct answer
@@ -80,4 +80,22 @@ function startGame() {
     document.getElementById("questions").style.display = "block";
 
     startTimer()
+
+//     var questionDiv = document.getElementById('questions');
+
+//     var questionHeader = document.createElement("h3")
+
+//         questionHeader.textContent = questions[0].question
+
+//     var button1 = document.createElement("button")
+//         button1.innerText = questions[0].answers[0];
+
+//     var button2 = document.createElement("button")
+//         button2.innerText = questions[0].answers[1];
+
+//     var button3 = document.createElement("button")
+//         button3.innerText = questions[0].answers[2];
+
+//     var button4 = document.createElement("button")
+//         button4.innerText = questions[0].answers[3];
 } 
