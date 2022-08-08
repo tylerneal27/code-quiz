@@ -72,6 +72,14 @@ function startTimer() {
         }
 }, 1000);}
 
+function getQuestion() {
+    console.log("you got here");
+    var questionTitle = document.getElementById("questionTitle")
+    questions[0]
+    questionTitle.textContent = questions[0].question
+    
+}
+
 
 function startGame() {
 
@@ -80,6 +88,7 @@ function startGame() {
     document.getElementById("questions").style.display = "block";
 
     startTimer()
+    getQuestion()
 
 //     var questionDiv = document.getElementById('questions');
 
