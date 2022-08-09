@@ -1,10 +1,10 @@
 // !GIVEN I am taking a code quiz
 // !WHEN I click the start button
 // !THEN a timer starts and I am presented with a question
-// WHEN I answer a question
-// THEN I am presented with another question
-// WHEN I answer a question incorrectly
-// THEN time is subtracted from the clock
+// !WHEN I answer a question
+// !THEN I am presented with another question
+// !WHEN I answer a question incorrectly
+// !THEN time is subtracted from the clock
 // WHEN all questions are answered or the timer reaches 0
 // THEN the game is over
 // WHEN the game is over
@@ -33,38 +33,42 @@
 
 // Game ends when all questions are answered OR the timer reaches 0 -- is there a case where the timer might go lower than 0 that needs to be accounted for?
 
+var qIndex = 0;
+var choices = document.querySelector('#choices')
+var timerInterval; 
+var secondsLeft = 60;
+var timer = document.getElementById("timer");
+
 var questions = [
     {
-        question: "how do you seperate string into an array?",
+        question: "how do you separate string into an array?",
         answers: [".split", ".push", ".pop", ".splice"],
-        correct: 0
+        correct: ".split"
     },
     {
         question: "what do you put after a method?",
         answers: ["{}", "()","[]", "<>"],
-        correct: 1
+        correct: "()"
     },
     {
         question: "how do you declare a variable?",
         answers: ["div", "prompt", "this", "let"],
-        correct: 3
+        correct: "let"
     },
     {
         question: "what is a boolean?",
         answers: ["true", "null", "string", "number"],
-        correct: 0 
+        correct:  "true"
     },
     {
         question: "how do you leave a function?",
         answers: ["for", "exit", "return", "finished"],
-        correct: 2
+        correct: "return"
     }
 ]
     
 function startTimer() {
-    var secondsLeft = 60;
-    var timer = document.getElementById("timer");
-    var timerInterval = setInterval(function() {
+    timerInterval = setInterval(function() {
         secondsLeft--;
         timer.innerText = secondsLeft
         if (secondsLeft === 0) {
@@ -75,9 +79,40 @@ function startTimer() {
 function getQuestion() {
     console.log("you got here");
     var questionTitle = document.getElementById("questionTitle")
-    questions[0]
-    questionTitle.textContent = questions[0].question
-    
+    // questions[0]
+    questionTitle.textContent = questions[qIndex].question
+    choices.innerHTML = ''
+    questions[qIndex].answers.forEach(function(answer){
+        var liEl = document.createElement('li')
+        liEl.textContent = answer
+        liEl.addEventListener('click', checkAnswer)
+        choices.append(liEl)
+    })
+}
+
+function checkAnswer() {
+    if (this.innerText === questions[qIndex].correct) {
+        console.log('correct')
+    } else{
+        secondsLeft -= 10;
+        if (secondsLeft< 0) {
+            secondsLeft= 0
+        }
+        timer.innerText = secondsLeft
+        console.log('wrong')
+    }
+    qIndex++;
+    if (qIndex === questions.length) {
+      endGame()  
+    } else{
+        getQuestion()
+    }
+}
+
+function endGame() {
+    document.getElementById('gameOver').style.display = 'block';
+
+    document.getElementById('questions').style.display = 'none';
 }
 
 
@@ -89,22 +124,4 @@ function startGame() {
 
     startTimer()
     getQuestion()
-
-//     var questionDiv = document.getElementById('questions');
-
-//     var questionHeader = document.createElement("h3")
-
-//         questionHeader.textContent = questions[0].question
-
-//     var button1 = document.createElement("button")
-//         button1.innerText = questions[0].answers[0];
-
-//     var button2 = document.createElement("button")
-//         button2.innerText = questions[0].answers[1];
-
-//     var button3 = document.createElement("button")
-//         button3.innerText = questions[0].answers[2];
-
-//     var button4 = document.createElement("button")
-//         button4.innerText = questions[0].answers[3];
 } 
