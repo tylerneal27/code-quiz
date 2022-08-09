@@ -22,9 +22,9 @@
   // !Set of answers -- array of strings
   // !Some way to check whether the answer is correct -- give the string OR the index of the correct answer
     //  Some way to track whether the answer the user selected is the correct answer -- does NOT need to be with the other question info
-// Need a way to display the question text, answers, and the answers need to be clickable
-// When you click an answer
-  // Compares the answer you chose to the correct answer
+// !Need a way to display the question text, answers, and the answers need to be clickable
+// !When you click an answer
+  // !Compares the answer you chose to the correct answer
   // Displays some kind of feedback based on whether the selected answer is correct or incorrect
   // If the answer is incorrect, time is subtracted from the clock
   // Regardless whether the answer is correct or incorrect, the current question disappears and the next question appears UNLESS the user is on the final question
@@ -38,6 +38,7 @@ var choices = document.querySelector('#choices')
 var timerInterval; 
 var secondsLeft = 60;
 var timer = document.getElementById("timer");
+var score = 0;
 
 var questions = [
     {
@@ -68,6 +69,7 @@ var questions = [
 ]
     
 function startTimer() {
+
     timerInterval = setInterval(function() {
         secondsLeft--;
         timer.innerText = secondsLeft
@@ -77,29 +79,42 @@ function startTimer() {
 }, 1000);}
 
 function getQuestion() {
-    console.log("you got here");
+    
     var questionTitle = document.getElementById("questionTitle")
-    // questions[0]
     questionTitle.textContent = questions[qIndex].question
+
     choices.innerHTML = ''
     questions[qIndex].answers.forEach(function(answer){
+
         var liEl = document.createElement('li')
-        liEl.textContent = answer
-        liEl.addEventListener('click', checkAnswer)
+        var button = document.createElement('button')
+        button.textContent = answer
+        button.addEventListener('click', checkAnswer)
+        liEl.insertAdjacentElement('beforeend', button)
+        
+
+        
         choices.append(liEl)
     })
 }
 
 function checkAnswer() {
+    var feedback = document.getElementById('feedback')
+    feedback.style.display = "block"
+
     if (this.innerText === questions[qIndex].correct) {
-        console.log('correct')
+        
+        feedback.innerText = "Correct"
+        score += 20
+        
     } else{
         secondsLeft -= 10;
         if (secondsLeft< 0) {
             secondsLeft= 0
         }
         timer.innerText = secondsLeft
-        console.log('wrong')
+        
+        feedback.innerText ='Wrong'
     }
     qIndex++;
     if (qIndex === questions.length) {
@@ -113,7 +128,23 @@ function endGame() {
     document.getElementById('gameOver').style.display = 'block';
 
     document.getElementById('questions').style.display = 'none';
+
+    clearInterval(timerInterval)
+
+    document.getElementById('finaleScore').innerText = score
 }
+
+function addScores() {
+    
+    var initials = document.getElementById('initials').value
+
+    var rating = {
+        score,initials
+    }
+    localStorage.setItem('rating', JSON.stringify(rating))
+}
+
+
 
 
 function startGame() {
