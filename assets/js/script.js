@@ -74,7 +74,7 @@ function startTimer() {
         secondsLeft--;
         timer.innerText = secondsLeft
         if (secondsLeft === 0) {
-            clearInterval(timerInterval);
+            endGame()
         }
 }, 1000);}
 
@@ -111,6 +111,7 @@ function checkAnswer() {
         secondsLeft -= 10;
         if (secondsLeft< 0) {
             secondsLeft= 0
+            endGame()
         }
         timer.innerText = secondsLeft
         
