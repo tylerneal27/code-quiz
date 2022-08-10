@@ -3,7 +3,7 @@
 ![coding quiz](./assets/images/coding-quiz.png)
 
 
-## desription
+## description
 
 a coding quiz with 5 questions.
 
